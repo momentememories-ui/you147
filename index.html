@@ -125,6 +125,7 @@
     .matchstick-item:active { cursor: grabbing; }
     .matchstick-item img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
 
+    /* ปรับโทนสีหัวใจและเงาเป็นสีแดง */
     .bouncing-heart-trigger {
       position: absolute;
       bottom: 80px;
@@ -140,7 +141,7 @@
       outline: none !important;
       box-shadow: none !important;
       -webkit-tap-highlight-color: transparent;
-      filter: drop-shadow(0 4px 10px rgba(230, 57, 70, 0.6));
+      filter: drop-shadow(0 4px 12px rgba(220, 20, 60, 0.6));
     }
 
     @keyframes heartBounce {
@@ -173,26 +174,27 @@
     .big-heart-shape {
       width: 100%;
       height: 100%;
-      background-color: #fff0f3;
+      background-color: #fff0f0;
       clip-path: path('M115,190 C115,190 20,125 20,65 C20,32 42,15 72,15 C91,15 105,25 115,38 C125,25 139,15 158,15 C188,15 210,32 210,65 C210,125 115,190 115,190 Z');
       position: relative;
-      border: 3px solid #e63946;
-      box-shadow: 0 10px 25px rgba(230, 57, 70, 0.4);
+      border: 3px solid #ff4d4d;
+      box-shadow: 0 10px 25px rgba(230, 0, 0, 0.4);
     }
 
+    /* ไล่ระดับสีน้ำในหัวใจเป็นโทนสีแดง */
     .heart-water-fill {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 0%;
-      background: linear-gradient(0deg, #b7094c, #d62828, #e63946, #ff4d6d);
+      background: linear-gradient(0deg, #cc0000, #ff3333, #ff6666);
       transition: height 0.12s ease-out;
-      box-shadow: 0 -4px 12px rgba(230, 57, 70, 0.6);
+      box-shadow: 0 -4px 12px rgba(230, 0, 0, 0.6);
     }
 
     .fill-instruction {
-      color: #e63946;
+      color: #d60000;
       font-size: 15px;
       margin-top: 25px;
       font-weight: 500;
@@ -205,6 +207,7 @@
       50% { opacity: 1; }
     }
 
+    /* เปลี่ยนรูปพื้นหลังเป็น พื้นหลัง.jpg */
     .polaroid-overlay {
       position: absolute;
       top: 0;
@@ -225,12 +228,13 @@
 
     .polaroid-container { position: relative; width: 100%; height: 100%; }
 
+    /* ปรับขอบรูปบางลง ดูคล้ายโพลาลอยด์มินิมอล */
     .polaroid {
       position: absolute;
       width: 125px;
       background: #ffffff;
-      padding: 9px 9px 26px 9px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(230, 57, 70, 0.15);
+      padding: 5px 5px 16px 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(200, 0, 0, 0.1);
       border-radius: 2px;
       cursor: pointer;
       opacity: 0;
@@ -253,11 +257,12 @@
       text-align: center;
       font-size: 11px;
       color: #333333;
-      margin-top: 8px;
+      margin-top: 6px;
       font-weight: 500;
       line-height: 1.3;
     }
 
+    /* ปุ่มปิดสีแดง */
     .polaroid .close-card-btn {
       display: none;
       position: absolute;
@@ -265,19 +270,18 @@
       right: -8px;
       width: 26px;
       height: 26px;
-      background: #e63946;
+      background: #e60000;
       color: white;
       border-radius: 50%;
       text-align: center;
       line-height: 26px;
       font-size: 13px;
       font-weight: bold;
-      box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
+      box-shadow: 0 2px 8px rgba(230, 0, 0, 0.4);
       cursor: pointer;
       z-index: 10;
     }
 
-    /* Keyframe เด้งโผล่จากศูนย์กลางแล้วกระจายตัวไปยังตำแหน่งของตัวเอง */
     @keyframes burstAndSpread {
       0% {
         top: 50%;
@@ -295,13 +299,22 @@
       }
     }
 
-    /* Keyframe ขยับเด้งขึ้นลงเบาๆ ชวนให้กดดูรูป */
-    @keyframes gentleBounce {
+    /* แอนิเมชันสั่นเขย่าแรงขึ้น ชวนดึงดูดสายตา */
+    @keyframes shakeAndFloat {
       0%, 100% {
         transform: translateY(0px) rotate(var(--target-rotate));
       }
-      50% {
-        transform: translateY(-8px) rotate(var(--target-rotate));
+      20% {
+        transform: translateY(-8px) rotate(calc(var(--target-rotate) - 6deg)) scale(1.03);
+      }
+      40% {
+        transform: translateY(4px) rotate(calc(var(--target-rotate) + 6deg)) scale(0.98);
+      }
+      60% {
+        transform: translateY(-6px) rotate(calc(var(--target-rotate) - 4deg)) scale(1.02);
+      }
+      80% {
+        transform: translateY(2px) rotate(calc(var(--target-rotate) + 3deg)) scale(1);
       }
     }
 
@@ -310,10 +323,11 @@
     }
 
     .polaroid.idle-bounce {
-      animation: gentleBounce 2.5s ease-in-out infinite;
+      animation: shakeAndFloat var(--anim-duration, 2s) ease-in-out infinite;
+      animation-delay: var(--anim-delay, 0s);
     }
 
-    /* ปรับแต่งไม่ให้ขยายขอบข้างๆ ออกเมื่อกดดูรูป */
+    /* ตอนกดดูรูป ปรับกระชับพอดีรูป ไม่ขยายขอบด้านข้างเกินจำเป็น */
     .polaroid.active {
       position: fixed !important;
       top: 50% !important;
@@ -323,40 +337,43 @@
       width: fit-content !important;
       max-width: 85vw !important;
       height: auto !important;
-      padding: 10px 10px 28px 10px !important;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3) !important;
+      padding: 8px 8px 20px 8px !important;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35) !important;
       border-radius: 4px;
       animation: none !important;
       opacity: 1 !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .polaroid.active img {
       width: auto !important;
       max-width: 100% !important;
-      height: auto !important;
       max-height: 60vh !important;
       object-fit: contain !important;
       border-radius: 2px;
       background-color: #ffffff;
-      display: block;
     }
 
     .polaroid.active .caption {
       display: block !important;
       animation: fadeIn 0.3s ease;
-      font-size: 13.5px;
+      font-size: 14px;
+      margin-top: 10px;
     }
 
     .polaroid.active .close-card-btn {
       display: block !important;
     }
 
+    /* ปุ่มย้อนกลับสีแดง */
     .back-to-message-btn {
       position: absolute;
       bottom: 25px;
       left: 50%;
       transform: translateX(-50%);
-      background: #e63946;
+      background: #e60000;
       color: #ffffff;
       border: none;
       padding: 10px 22px;
@@ -365,13 +382,13 @@
       font-weight: 500;
       cursor: pointer;
       z-index: 400;
-      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.5);
+      box-shadow: 0 4px 15px rgba(230, 0, 0, 0.5);
       transition: transform 0.2s, background-color 0.2s;
     }
 
     .back-to-message-btn:active {
       transform: translateX(-50%) scale(0.95);
-      background: #d62828;
+      background: #cc0000;
     }
 
     .floating-heart {
@@ -380,7 +397,7 @@
       z-index: 350;
       font-size: 26px;
       animation: floatUp 2.2s ease-out forwards;
-      filter: drop-shadow(0 2px 6px rgba(230, 57, 70, 0.5));
+      filter: drop-shadow(0 2px 6px rgba(230, 0, 0, 0.5));
     }
 
     @keyframes floatUp {
@@ -533,7 +550,7 @@
           vx: (Math.random() - 0.5) * spread,
           vy: (Math.random() - 0.5) * spread - 1.2,
           size: Math.random() * 3 + 1,
-          color: `hsl(${Math.random() * 30 + 15}, 100%, 55%)`,
+          color: `hsl(${Math.random() * 20}, 100%, 50%)`, // ปรับไฟประกายแดงขึ้น
           alpha: 1,
           life: Math.random() * 18 + 10
         });
@@ -773,13 +790,14 @@
     }, { passive: false });
     window.addEventListener('touchend', stopWatering);
 
-    const pastelHearts = ['❤️', '💖', 'ปุ้งๆ', '❣️', '✨'];
+    // ปรับไอคอนหัวใจเป็นโทนสีแดงสดใส
+    const redHearts = ['❤️', '🥊', '❣️', '🌹', '✨'];
 
     function createFloatingHearts(count = 1, customX = null, customY = null) {
       for (let i = 0; i < count; i++) {
         const heart = document.createElement('div');
         heart.className = 'floating-heart';
-        heart.innerText = pastelHearts[Math.floor(Math.random() * pastelHearts.length)];
+        heart.innerText = redHearts[Math.floor(Math.random() * redHearts.length)];
         
         const startX = customX !== null ? (customX + (Math.random() * 60 - 30)) : (Math.random() * (viewport.clientWidth - 40) + 20);
         const startY = customY !== null ? (customY + (Math.random() * 40 - 20)) : (viewport.clientHeight / 2 + 50);
@@ -803,12 +821,13 @@
       }, 120);
     }
 
+    /* อัปเดตรายการไฟล์รูปภาพ คำอธิบาย และตั้งค่าจังหวะการสั่นที่แตกต่างกัน */
     const polaroidData = [
-      { img: 'photo1.jpg', text: 'อยากอยู่กับเธอในทุกๆวัน', top: '8%', left: '6%', rotate: '-9deg' },
-      { img: 'photo2.jpg', text: 'รักเธอมากๆเลยนะ', top: '10%', left: '56%', rotate: '8deg' },
-      { img: 'photo5.jpg', text: 'อยู่กับเค้าไปทุกเทศกาลเลยนะ', top: '38%', left: '30%', rotate: '-3deg' },
-      { img: 'photo3.png', text: 'มีความสุขมากๆ', top: '60%', left: '8%', rotate: '7deg' },
-      { img: 'photo4.jpg', text: 'คิดถึงที่สุด', top: '62%', left: '54%', rotate: '-6deg' }
+      { img: 'photo1.jpg', text: 'อยากอยู่กับเธอในทุกๆวัน', top: '8%', left: '6%', rotate: '-9deg', duration: '1.8s', delay: '0s' },
+      { img: 'photo2.jpg', text: 'รักเธอมากๆเลยนะ', top: '10%', left: '56%', rotate: '8deg', duration: '2.4s', delay: '0.4s' },
+      { img: 'photo5.jpg', text: 'อยู่กับเค้าไปทุกเทศกาลเลยนะ', top: '38%', left: '30%', rotate: '-3deg', duration: '1.6s', delay: '0.2s' },
+      { img: 'photo3.png', text: 'มีความสุขมากๆ', top: '60%', left: '8%', rotate: '7deg', duration: '2.2s', delay: '0.6s' },
+      { img: 'photo4.jpg', text: 'คิดถึงที่สุด', top: '62%', left: '54%', rotate: '-6deg', duration: '2.0s', delay: '0.3s' }
     ];
 
     function showPolaroidsSimultaneously() {
@@ -823,6 +842,8 @@
         card.style.top = item.top;
         card.style.left = item.left;
         card.style.setProperty('--target-rotate', item.rotate);
+        card.style.setProperty('--anim-duration', item.duration);
+        card.style.setProperty('--anim-delay', item.delay);
         card.style.zIndex = index + 1;
 
         card.innerHTML = `
@@ -831,10 +852,8 @@
           <div class="caption">${item.text}</div>
         `;
 
-        // สั่งให้เด้งออกมาพร้อมกันจากจุดศูนย์กลาง
         card.classList.add('animate-burst');
 
-        // เมื่อแอนิเมชันกระจายตัวเสร็จ ให้เริ่มแอนิเมชันลอยเด้งดึ๋ง
         setTimeout(() => {
           card.classList.remove('animate-burst');
           card.style.opacity = '1';
